@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investimentos - Análise de Ações</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Processo de Seleção de Ações</h1>
+        <p>Responda às perguntas abaixo para avaliar suas ações de forma interativa.</p>
+    </header>
+
+    <section id="financeiro">
+        <h2>Critérios Financeiros</h2>
+        <form id="form-financeiro">
+            <label>O ROI da empresa é maior que 5% nos últimos anos?
+                <input type="radio" name="roi" value="1"> Sim
+                <input type="radio" name="roi" value="0"> Não
+            </label><br>
+            <label>A dívida líquida é menor que o lucro líquido nos últimos 12 meses?
+                <input type="radio" name="divida" value="1"> Sim
+                <input type="radio" name="divida" value="0"> Não
+            </label><br>
+            <label>A empresa tem um crescimento de receitas ou lucros superior a 5% nos últimos 5 anos?
+                <input type="radio" name="crescimento" value="1"> Sim
+                <input type="radio" name="crescimento" value="0"> Não
+            </label><br>
+            <!-- Mais perguntas financeiras aqui -->
+            <button type="button" onclick="calcularPontuacao()">Calcular Pontuação</button>
+        </form>
+    </section>
+
+    <section id="institucional">
+        <h2>Critérios Institucionais</h2>
+        <form id="form-institucional">
+            <label>A empresa possui produtos/serviços com potencial para aumentar vendas por anos?
+                <input type="radio" name="produtos" value="1"> Sim
+                <input type="radio" name="produtos" value="0"> Não
+            </label><br>
+            <label>A administração da empresa está comprometida em aumentar o potencial de vendas?
+                <input type="radio" name="administracao" value="1"> Sim
+                <input type="radio" name="administracao" value="0"> Não
+            </label><br>
+            <!-- Mais perguntas institucionais aqui -->
+            <button type="button" onclick="calcularPontuacao()">Calcular Pontuação</button>
+        </form>
+    </section>
+
+    <section id="resultados">
+        <h2>Resultados</h2>
+        <p>Pontuação Total: <span id="pontuacao-total">0</span></p>
+        <p>Alocação sugerida: <span id="alocacao">0%</span></p>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
