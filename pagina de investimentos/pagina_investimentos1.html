@@ -1,60 +1,491 @@
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investimentos - Análise de Ações</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resistência de Ativos - Início</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <header>
-        <h1>Processo de Seleção de Ações</h1>
-        <p>Responda às perguntas abaixo para avaliar suas ações de forma interativa.</p>
-    </header>
-
-    <section id="financeiro">
-        <h2>Critérios Financeiros</h2>
-        <form id="form-financeiro">
-            <label>O ROI da empresa é maior que 5% nos últimos anos?
-                <input type="radio" name="roi" value="1"> Sim
-                <input type="radio" name="roi" value="0"> Não
-            </label><br>
-            <label>A dívida líquida é menor que o lucro líquido nos últimos 12 meses?
-                <input type="radio" name="divida" value="1"> Sim
-                <input type="radio" name="divida" value="0"> Não
-            </label><br>
-            <label>A empresa tem um crescimento de receitas ou lucros superior a 5% nos últimos 5 anos?
-                <input type="radio" name="crescimento" value="1"> Sim
-                <input type="radio" name="crescimento" value="0"> Não
-            </label><br>
-            <!-- Mais perguntas financeiras aqui -->
-            <button type="button" onclick="calcularPontuacao()">Calcular Pontuação</button>
-        </form>
-    </section>
-
-    <section id="institucional">
-        <h2>Critérios Institucionais</h2>
-        <form id="form-institucional">
-            <label>A empresa possui produtos/serviços com potencial para aumentar vendas por anos?
-                <input type="radio" name="produtos" value="1"> Sim
-                <input type="radio" name="produtos" value="0"> Não
-            </label><br>
-            <label>A administração da empresa está comprometida em aumentar o potencial de vendas?
-                <input type="radio" name="administracao" value="1"> Sim
-                <input type="radio" name="administracao" value="0"> Não
-            </label><br>
-            <!-- Mais perguntas institucionais aqui -->
-            <button type="button" onclick="calcularPontuacao()">Calcular Pontuação</button>
-        </form>
-    </section>
-
-    <section id="resultados">
-        <h2>Resultados</h2>
-        <p>Pontuação Total: <span id="pontuacao-total">0</span></p>
-        <p>Alocação sugerida: <span id="alocacao">0%</span></p>
-    </section>
-
-    <script src="script.js"></script>
+  <div class="hero-section">
+    <h1 class="tagline">Quem é rei e nasceu pra brilhar, pode tomar vários socos que a coroa nunca sai da minha cabeça.</h1>
+    <a href="analise.html" class="cta-button">Acesse Agora</a>
+  </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resistência de Ativos - Análise</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="analysis-section">
+    <!-- Barra de busca do ticker -->
+    <div class="search-bar">
+      <input type="text" id="tickerInput" placeholder="Digite o ticker (ex: PETR4)" />
+      <button id="searchButton">Buscar</button>
+    </div>
+    <!-- Informações e gráfico -->
+    <div id="stockInfo"></div>
+    <canvas id="chartCanvas"></canvas>
+    <!-- Questionários institucionais e financeiros -->
+    <div class="questions-container">
+      <div class="question-group">
+        <h3>Perguntas Institucionais</h3>
+        <!-- 15 perguntas institucionais com Sim/Não e explicações -->
+        <div class="question">
+          <p><strong>1.</strong> A empresa possui um modelo de negócio claro e sustentável?
+            <span class="explanation">Um modelo de negócio bem definido indica como a empresa gera lucro e se mantém no longo prazo.</span>
+          </p>
+          <label><input type="radio" name="q1" value="yes"> Sim</label>
+          <label><input type="radio" name="q1" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>2.</strong> A empresa possui vantagem competitiva duradoura no setor?
+            <span class="explanation">Uma vantagem competitiva ("fosso") ajuda a proteger participação de mercado e rentabilidade.</span>
+          </p>
+          <label><input type="radio" name="q2" value="yes"> Sim</label>
+          <label><input type="radio" name="q2" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>3.</strong> A gestão da empresa é experiente e confiável?
+            <span class="explanation">Gestores experientes e alinhados com acionistas tendem a tomar decisões benéficas para a empresa.</span>
+          </p>
+          <label><input type="radio" name="q3" value="yes"> Sim</label>
+          <label><input type="radio" name="q3" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>4.</strong> A governança corporativa da empresa é sólida?
+            <span class="explanation">Boas práticas de governança (conselho independente, transparência) reduzem riscos de má gestão.</span>
+          </p>
+          <label><input type="radio" name="q4" value="yes"> Sim</label>
+          <label><input type="radio" name="q4" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>5.</strong> A marca e reputação da empresa são fortes?
+            <span class="explanation">Uma marca forte gera fidelidade de clientes e pode melhorar vendas e margem de lucro.</span>
+          </p>
+          <label><input type="radio" name="q5" value="yes"> Sim</label>
+          <label><input type="radio" name="q5" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>6.</strong> A empresa atua em um setor com potencial de crescimento?
+            <span class="explanation">Setores em crescimento oferecem oportunidades de expansão para a empresa.</span>
+          </p>
+          <label><input type="radio" name="q6" value="yes"> Sim</label>
+          <label><input type="radio" name="q6" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>7.</strong> A empresa tem uma estratégia clara de crescimento para o futuro?
+            <span class="explanation">Uma estratégia de crescimento bem definida indica como a empresa planeja aumentar receita e lucro.</span>
+          </p>
+          <label><input type="radio" name="q7" value="yes"> Sim</label>
+          <label><input type="radio" name="q7" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>8.</strong> A empresa gerencia bem seus riscos operacionais e de mercado?
+            <span class="explanation">Identificar e mitigar riscos (operacionais, regulatórios, etc.) aumenta a estabilidade do negócio.</span>
+          </p>
+          <label><input type="radio" name="q8" value="yes"> Sim</label>
+          <label><input type="radio" name="q8" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>9.</strong> A empresa tem clientes satisfeitos e fiéis?
+            <span class="explanation">Clientes satisfeitos tendem a repetir compras e recomendar a empresa, impulsionando o crescimento.</span>
+          </p>
+          <label><input type="radio" name="q9" value="yes"> Sim</label>
+          <label><input type="radio" name="q9" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>10.</strong> A empresa possui portfólio de produtos/serviços diversificado?
+            <span class="explanation">Diversificação reduz dependência de um único produto ou mercado, diminuindo riscos.</span>
+          </p>
+          <label><input type="radio" name="q10" value="yes"> Sim</label>
+          <label><input type="radio" name="q10" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>11.</strong> A empresa investe em inovação e acompanha tendências do setor?
+            <span class="explanation">Inovação constante mantém a empresa competitiva frente às mudanças de mercado.</span>
+          </p>
+          <label><input type="radio" name="q11" value="yes"> Sim</label>
+          <label><input type="radio" name="q11" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>12.</strong> A empresa demonstra responsabilidade social e ambiental (ESG)?
+            <span class="explanation">Compromisso com valores éticos e sustentabilidade melhora reputação e reduz riscos legais.</span>
+          </p>
+          <label><input type="radio" name="q12" value="yes"> Sim</label>
+          <label><input type="radio" name="q12" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>13.</strong> Os interesses de gestores e acionistas majoritários estão alinhados aos dos minoritários?
+            <span class="explanation">Quando executivos e grandes acionistas têm participação acionária, as decisões tendem a beneficiar todos os acionistas.</span>
+          </p>
+          <label><input type="radio" name="q13" value="yes"> Sim</label>
+          <label><input type="radio" name="q13" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>14.</strong> A empresa mantém relações sólidas com fornecedores e parceiros?
+            <span class="explanation">Parcerias e fornecimento estáveis asseguram operações sem interrupções e melhores condições comerciais.</span>
+          </p>
+          <label><input type="radio" name="q14" value="yes"> Sim</label>
+          <label><input type="radio" name="q14" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>15.</strong> A empresa possui histórico de conduta ética e compliance?
+            <span class="explanation">Uma empresa sem escândalos ou fraudes evita prejuízos financeiros e de imagem a longo prazo.</span>
+          </p>
+          <label><input type="radio" name="q15" value="yes"> Sim</label>
+          <label><input type="radio" name="q15" value="no"> Não</label>
+        </div>
+      </div>
+      <div class="question-group">
+        <h3>Perguntas Financeiras</h3>
+        <!-- 15 perguntas financeiras com Sim/Não e explicações -->
+        <div class="question">
+          <p><strong>1.</strong> A receita da empresa está crescendo de forma consistente?
+            <span class="explanation">Crescimento de receita indica aumento da demanda e expansão dos negócios.</span>
+          </p>
+          <label><input type="radio" name="q16" value="yes"> Sim</label>
+          <label><input type="radio" name="q16" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>2.</strong> Os lucros da empresa são crescentes e sustentáveis?
+            <span class="explanation">Lucros em crescimento e consistentes mostram capacidade de gerar valor continuamente.</span>
+          </p>
+          <label><input type="radio" name="q17" value="yes"> Sim</label>
+          <label><input type="radio" name="q17" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>3.</strong> As margens de lucro (bruta, operacional, líquida) são altas ou estão melhorando?
+            <span class="explanation">Margens elevadas ou em melhora indicam eficiência e controle de custos na operação.</span>
+          </p>
+          <label><input type="radio" name="q18" value="yes"> Sim</label>
+          <label><input type="radio" name="q18" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>4.</strong> O endividamento da empresa está em nível saudável?
+            <span class="explanation">Dívida controlada (baixa relação dívida/patrimônio ou dívida/EBITDA) reduz o risco financeiro.</span>
+          </p>
+          <label><input type="radio" name="q19" value="yes"> Sim</label>
+          <label><input type="radio" name="q19" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>5.</strong> A empresa gera fluxo de caixa operacional positivo suficiente?
+            <span class="explanation">Fluxo de caixa operacional positivo indica que as operações financiam as necessidades e expansão do negócio.</span>
+          </p>
+          <label><input type="radio" name="q20" value="yes"> Sim</label>
+          <label><input type="radio" name="q20" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>6.</strong> O ROE (Retorno sobre Patrimônio) e ROA (Retorno sobre Ativos) são altos em relação ao setor?
+            <span class="explanation">ROE/ROA elevados indicam que a empresa é eficiente em gerar retorno sobre o capital investido.</span>
+          </p>
+          <label><input type="radio" name="q21" value="yes"> Sim</label>
+          <label><input type="radio" name="q21" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>7.</strong> A empresa remunera acionistas (dividendos ou recompra de ações)?
+            <span class="explanation">Distribuir dividendos ou recomprar ações mostra que a empresa gera caixa e retorna valor ao acionista.</span>
+          </p>
+          <label><input type="radio" name="q22" value="yes"> Sim</label>
+          <label><input type="radio" name="q22" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>8.</strong> As despesas estão sob controle (custos não crescem acima da receita)?
+            <span class="explanation">Manter custos sob controle preserva margens e indica disciplina financeira na gestão.</span>
+          </p>
+          <label><input type="radio" name="q23" value="yes"> Sim</label>
+          <label><input type="radio" name="q23" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>9.</strong> A empresa possui boa liquidez para pagar dívidas de curto prazo?
+            <span class="explanation">Indicadores de liquidez positivos (ex: liquidez corrente > 1) mostram capacidade de honrar obrigações de curto prazo.</span>
+          </p>
+          <label><input type="radio" name="q24" value="yes"> Sim</label>
+          <label><input type="radio" name="q24" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>10.</strong> Os múltiplos de valuation (P/L, P/VP, EV/EBITDA) estão atrativos?
+            <span class="explanation">Múltiplos razoáveis ou baixos em relação ao mercado podem indicar que a ação não está cara.</span>
+          </p>
+          <label><input type="radio" name="q25" value="yes"> Sim</label>
+          <label><input type="radio" name="q25" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>11.</strong> O crescimento do lucro está acompanhado de geração de caixa?
+            <span class="explanation">É importante que o lucro contábil também se reflita em caixa; lucros sem caixa podem ser insustentáveis.</span>
+          </p>
+          <label><input type="radio" name="q26" value="yes"> Sim</label>
+          <label><input type="radio" name="q26" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>12.</strong> A empresa reinveste lucros de forma eficiente?
+            <span class="explanation">Reinvestir ganhos em projetos rentáveis indica que a empresa aproveita oportunidades de crescimento.</span>
+          </p>
+          <label><input type="radio" name="q27" value="yes"> Sim</label>
+          <label><input type="radio" name="q27" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>13.</strong> Os resultados são estáveis ou crescentes ao longo dos anos?
+            <span class="explanation">Lucros consistentes e crescentes sugerem um negócio resiliente e previsível.</span>
+          </p>
+          <label><input type="radio" name="q28" value="yes"> Sim</label>
+          <label><input type="radio" name="q28" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>14.</strong> A empresa evita emitir novas ações em excesso (diluição)?
+            <span class="explanation">Poucas emissões de ações significam que o acionista não está sendo diluído frequentemente.</span>
+          </p>
+          <label><input type="radio" name="q29" value="yes"> Sim</label>
+          <label><input type="radio" name="q29" value="no"> Não</label>
+        </div>
+        <div class="question">
+          <p><strong>15.</strong> A empresa possui vantagens financeiras extras (incentivos fiscais, subsídios)?
+            <span class="explanation">Benefícios financeiros adicionais podem melhorar resultados, mas é importante avaliar se são sustentáveis.</span>
+          </p>
+          <label><input type="radio" name="q30" value="yes"> Sim</label>
+          <label><input type="radio" name="q30" value="no"> Não</label>
+        </div>
+      </div>
+    </div>
+    <!-- Seção de pontuação e alocação -->
+    <div class="score-section">
+      <p><strong>Pontuação de resistência:</strong> <span id="scoreValue">0</span>/30</p>
+      <p><strong>Alocação sugerida:</strong> <span id="allocationValue">0%</span></p>
+    </div>
+  </div>
+  <!-- Inclusão da biblioteca Chart.js via CDN (rede) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Script JS da página de análise -->
+  <script src="js/analise.js"></script>
+</body>
+</html>
+
+body {
+  background-color: #000;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+/* Hero (página inicial) */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  padding: 0 20px;
+}
+.hero-section .tagline {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+  max-width: 800px;
+  margin-bottom: 40px;
+}
+.hero-section .cta-button {
+  display: inline-block;
+  background-color: #ff0;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+}
+.hero-section .cta-button:hover {
+  background-color: #e5e500;
+}
+/* Página de análise */
+.analysis-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.search-bar {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.search-bar input[type="text"] {
+  width: 200px;
+  padding: 8px;
+  font-size: 1em;
+}
+.search-bar button {
+  padding: 8px 16px;
+  font-size: 1em;
+  margin-left: 4px;
+  cursor: pointer;
+}
+#stockInfo {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+#chartCanvas {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 40px;
+  background-color: #111;
+  border: 1px solid #333;
+}
+.questions-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+.question-group {
+  flex: 1;
+  min-width: 300px;
+}
+.question-group h3 {
+  text-align: center;
+  color: #0ff;
+  margin-bottom: 15px;
+  text-shadow: 0 0 4px #0ff;
+}
+.question {
+  margin-bottom: 15px;
+}
+.question p {
+  margin: 0 0 5px;
+}
+.question .explanation {
+  display: block;
+  font-size: 0.9em;
+  color: #999;
+  margin-top: 2px;
+}
+.question label {
+  margin-right: 15px;
+}
+.score-section {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 1.1em;
+}
+.score-section p {
+  margin: 5px 0;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const searchButton = document.getElementById('searchButton');
+  const tickerInput = document.getElementById('tickerInput');
+  const stockInfoDiv = document.getElementById('stockInfo');
+  const chartCanvas = document.getElementById('chartCanvas');
+  let chartInstance = null;
+
+  // Atualiza pontuação de resistência e alocação sugerida
+  function updateScore() {
+    const yesAnswers = document.querySelectorAll('input[type=radio][value="yes"]:checked').length;
+    document.getElementById('scoreValue').textContent = yesAnswers;
+    // Porcentagem de alocação sugerida proporcional à pontuação (0-30)
+    const percent = Math.round((yesAnswers / 30) * 100);
+    document.getElementById('allocationValue').textContent = percent + '%';
+  }
+
+  // Adiciona event listener em todos os radios para recalcular pontuação ao mudar
+  document.querySelectorAll('input[type=radio]').forEach(radio => {
+    radio.addEventListener('change', updateScore);
+  });
+
+  // Função para buscar dados do ativo via API BRAPI
+  function fetchStockData(ticker) {
+        const apiUrl = `https://brapi.dev/api/quote/${ticker}?range=1mo&interval=1d&fundamental=false&dividends=false&token=asYDwuHKJA3vGmjrBsDpAR`;fetch(apiUrl)
+      .then(response => response.jso
+      .then(data => {
+        if (!data.results || data.results.length === 0) {
+          stockInfoDiv.textContent = 'Ticker não encontrado.';
+          if (chartInstance) {
+            chartInstance.destroy();
+            chartInstance = null;
+          }
+          return;
+        }
+        const result = data.results[0];
+        const price = result.regularMarketPrice;
+        const changePercent = result.regularMarketChangePercent;
+        const shortName = result.shortName || result.longName || result.symbol;
+        // Exibe informações básicas do ativo (nome, preço, variação)
+        const sign = changePercent >= 0 ? '+' : '';
+        stockInfoDiv.textContent = `${shortName}: R$ ${price.toFixed(2)} (${sign}${changePercent.toFixed(2)}%)`;
+
+        // Prepara dados para o gráfico (preços históricos)
+        const labels = [];
+        const prices = [];
+        if (result.historicalDataPrice && result.historicalDataPrice.length > 0) {
+          result.historicalDataPrice.forEach(item => {
+            const date = new Date(item.date * 1000);
+            labels.push(date.toLocaleDateString('pt-BR'));
+            // Usa preço ajustado, se disponível, ou preço de fechamento normal
+            prices.push(item.adjustedClose !== undefined ? item.adjustedClose : item.close);
+          });
+        }
+        // Destroi gráfico anterior se existir
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+        // Cria novo gráfico de linha com Chart.js
+        const ctx = chartCanvas.getContext('2d');
+        chartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Preço de Fechamento',
+              data: prices,
+              borderColor: '#39ff14',
+              backgroundColor: 'rgba(57, 255, 20, 0.2)',
+              tension: 0.1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: {
+                ticks: { color: '#fff' },
+                grid: { color: '#444' }
+              },
+              y: {
+                ticks: { color: '#fff' },
+                grid: { color: '#444' }
+              }
+            }
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Erro na consulta API:', error);
+        stockInfoDiv.textContent = 'Erro ao buscar dados.';
+      });
+  }
+
+  // Evento de clique no botão Buscar
+  searchButton.addEventListener('click', function() {
+    const ticker = tickerInput.value.trim();
+    if (ticker) {
+      fetchStockData(ticker);
+    }
+  });
+
+  // Também permite pressionar Enter no campo de texto para buscar
+  tickerInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchButton.click();
+    }
+  });
+});
